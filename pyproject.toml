@@ -1,0 +1,25 @@
+[project]
+name = "combination-app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sahil Mehdiyev",email = "branchsahil@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic[dotenv] (>=2.11.5,<3.0.0)",
+    "fastapi (>=0.115.12,<0.116.0)",
+    "uvicorn (>=0.34.2,<0.35.0)",
+    "sqlalchemy (>=2.0.41,<3.0.0)",
+    "python-jose[cryptography] (>=3.4.0,<4.0.0)",
+    "passlib[bcrypt] (>=1.7.4,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "combination_app", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
