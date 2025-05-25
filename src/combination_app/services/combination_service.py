@@ -63,4 +63,68 @@ class CombinationService:
         return paginate_query(query, page, per_page).all()
     
     
+    
+    def update_combination(
+        self,
+        combination_id: int,
+        combination_data: CombinationUpdate,
+        current_user: User
+    ) -> Combination:
+        combination = self.get_combination_by_id(combination_id)
         
+        if not combination:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Combination not found"
+            )
+            
+        if combination.owner_id != current_user.id and not current_user.is_superuser:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail = 'You do not have permission for this operation.'
+            )
+            
+        
+        for field, value in combination_data.dict(exclude_unset=True).items():
+            setattr(combination, field, value)
+            
+        self.db.commit()
+        self.db.refresh(combination)
+        
+        return combination
+    
+    
+    def delete_combination(self, combination_id: int, current_user: User) -> bool:
+        combination = self.get_combination_by_id(combination_id)
+        
+        if not combination:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail = 'Combination not found'
+            )
+            
+        if combination.owner_id != current_user.id and not current_user.is_superuser:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail = 'You do not have permission for this operation.'
+            )
+            
+        combination.is_active = False
+        self.db.commit()
+        
+        return True
+    
+    
+    def get_user_combinations(self, user_id: int, page: int = 1, per_page: int = 10) -> List[Combination]:
+        query = self.db.query(Combination).filter(
+            Combination.owner_id == user_id,
+            Combination.is_active == True
+        ).order_by(Combination.created_at.desc())
+        
+        return paginate_query(query, page, per_page).all()
+    
+    
+    
+
+
+            
