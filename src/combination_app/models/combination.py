@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Text, Integer, ForeignKey, JSON
 from sqlalchemy.orm import relationship
-from models.base import BaseModel
+from combination_app.models.base import BaseModel
 
 
 class Combination(BaseModel):

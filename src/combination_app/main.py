@@ -5,11 +5,9 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 import uvicorn
 import logging
-from config.settings import get_settings
-from config.database import engine, get_db
-from models import User, Combination  
-from api.v1.router import api_router
-from utils.helpers import create_response
+from combination_app.config.settings import get_settings
+from combination_app.api.v1.router import api_router
+from combination_app.utils.helpers import create_response
 
 from sqlalchemy.orm import Session
 import os
@@ -29,7 +27,6 @@ app = FastAPI(
     version="1.0.0",
     docs_url="/docs" if settings.debug else None,
     redoc_url="/redoc" if settings.debug else None,
-
 )
 
 app.add_middleware(
@@ -44,6 +41,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app.include_router(api_router)
+
 
 @app.get("/")
 async def root():

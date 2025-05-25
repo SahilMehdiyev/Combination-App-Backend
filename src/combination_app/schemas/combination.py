@@ -6,9 +6,9 @@ from datetime import datetime
 class CombinationBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     description: Optional[str] = None
-    items = List[Dict[str, Any]] = Field(..., min_items=1)
+    items: List[Dict[str, Any]] = Field(..., min_items=1)
     category: Optional[str] = None
-    tags = Optional[List[str]] = None
+    tags: Optional[List[str]] = None
 
 
 class CombinationCreate(CombinationBase):
