@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 
 from combination_app.config.database import SessionLocal, engine, get_db
-from . import models
+# from . import models
 
 load_dotenv()
 
