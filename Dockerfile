@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # System dependencies
 RUN apt-get update && apt-get install -y \
@@ -22,7 +22,7 @@ ENV POETRY_CACHE_DIR=/tmp/poetry_cache
 COPY pyproject.toml poetry.lock* /app/
 
 # Install dependencies
-RUN poetry install --no-dev --no-root && rm -rf $POETRY_CACHE_DIR
+RUN poetry install --only=main --no-root && rm -rf $POETRY_CACHE_DIR
 
 # Copy application code
 COPY ./src /app/src

@@ -1,0 +1,1 @@
+docker-compose exec db psql -U combination_user -d combination_db
