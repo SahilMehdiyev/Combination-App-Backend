@@ -48,7 +48,6 @@ jobs:
     - name: Run Alembic Migrations (Test DB)
       run: |
         poetry run alembic upgrade head
-      working-directory: ./src/combination_app
 
     - name: Run Tests
       run: |
